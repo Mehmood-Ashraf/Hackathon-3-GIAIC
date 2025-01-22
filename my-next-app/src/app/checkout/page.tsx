@@ -2,13 +2,23 @@
 import Header from "@/components/layout/Header";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import Link from "next/link";
 import React, { useState, useEffect } from "react";
 import IFoods from "@/types/foods";
 
 export default function CheckoutPage() {
   const [cartItems, setCartItems] = useState<IFoods[]>([]);
-  const [shippingAddress, setShippingAddress] = useState("");
+  const [shippingAddress, setShippingAddress] = useState({
+    firstName: "",
+    lastName: "",
+    email: "",
+    phone: "",
+    company: "",
+    country: "",
+    city: "",
+    zip: "",
+    address1: "",
+    address2: "",
+  });
   const router = useRouter();
 
   useEffect(() => {
@@ -24,7 +34,7 @@ export default function CheckoutPage() {
   const tax = (totalAmount * 0.07).toFixed(2);
 
   const handleProceedToPayment = () => {
-    if (!shippingAddress) {
+    if (!shippingAddress.firstName || !shippingAddress.address1) {
       alert("Please enter a shipping address.");
       return;
     }
@@ -72,6 +82,13 @@ export default function CheckoutPage() {
                   <input
                     type="text"
                     id="firstName"
+                    value={shippingAddress.firstName}
+                    onChange={(e) => {
+                      setShippingAddress({
+                        ...shippingAddress,
+                        firstName: e.target.value
+                      })
+                    }}
                     className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500"
                   />
                 </div>
@@ -86,6 +103,13 @@ export default function CheckoutPage() {
                   <input
                     type="text"
                     id="lastName"
+                    value={shippingAddress.lastName}
+                    onChange={(e) => {
+                      setShippingAddress({
+                        ...shippingAddress,
+                        lastName: e.target.value
+                      })
+                    }}
                     className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500"
                   />
                 </div>
@@ -100,7 +124,14 @@ export default function CheckoutPage() {
                   </label>
                   <input
                     type="text"
-                    id="firstName"
+                    id="email"
+                    value={shippingAddress.email}
+                    onChange={(e) => {
+                      setShippingAddress({
+                        ...shippingAddress,
+                        email: e.target.value
+                      })
+                    }}
                     className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500"
                   />
                 </div>
@@ -114,7 +145,14 @@ export default function CheckoutPage() {
                   </label>
                   <input
                     type="text"
-                    id="lastName"
+                    id="phoneNumber"
+                    value={shippingAddress.phone}
+                    onChange={(e) => {
+                      setShippingAddress({
+                        ...shippingAddress,
+                        phone: e.target.value
+                      })
+                    }}
                     className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500"
                   />
                 </div>
@@ -129,6 +167,13 @@ export default function CheckoutPage() {
                   <input
                     type="text"
                     id="company"
+                    value={shippingAddress.company}
+                    onChange={(e) => {
+                      setShippingAddress({
+                        ...shippingAddress,
+                        company: e.target.value
+                      })
+                    }}
                     className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500"
                   />
                 </div>
@@ -141,6 +186,8 @@ export default function CheckoutPage() {
                   </label>
                   <select
                     id="country"
+                    value={shippingAddress.country} 
+                    onChange={(e) => setShippingAddress({ ...shippingAddress, country: e.target.value })}
                     className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500"
                   >
                     <option value="">Choose country</option>
@@ -160,7 +207,9 @@ export default function CheckoutPage() {
                   </label>
                   <input
                     type="text"
-                    id="company"
+                    id="city"
+                    value={shippingAddress.city}
+                    onChange={(e) => setShippingAddress({ ...shippingAddress, city: e.target.value })}
                     className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500"
                   />
                 </div>
@@ -174,7 +223,9 @@ export default function CheckoutPage() {
                   </label>
                   <input
                     type="text"
-                    id="company"
+                    id="zipcode"
+                    value={shippingAddress.zip}
+                    onChange={(e) => setShippingAddress({ ...shippingAddress, zip: e.target.value })}
                     className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500"
                   />
                 </div>
@@ -188,7 +239,9 @@ export default function CheckoutPage() {
                   </label>
                   <input
                     type="text"
-                    id="company"
+                    id="address1"
+                    value={shippingAddress.address1}
+                    onChange={(e) => setShippingAddress({ ...shippingAddress, address1: e.target.value })}
                     className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500"
                   />
                 </div>
@@ -202,7 +255,9 @@ export default function CheckoutPage() {
                   </label>
                   <input
                     type="text"
-                    id="company"
+                    id="address2"
+                    value={shippingAddress.address2}
+                    onChange={(e) => setShippingAddress({ ...shippingAddress, address2: e.target.value })}
                     className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500"
                   />
                 </div>

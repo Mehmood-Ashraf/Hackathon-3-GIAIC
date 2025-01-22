@@ -4,7 +4,15 @@ import Product from './product'
 import IFoods from '@/types/foods'
 import {client} from "@/sanity/lib/client"
 
-const page = async ({ params }: { params:{ slug: string } }) => {
+
+interface PageProps {
+  params: Promise<{
+    slug: string;
+  }> 
+}
+
+
+const Page = async ({ params }:PageProps) => {
 
   const {slug} = await params
   const product:IFoods =
@@ -31,4 +39,4 @@ const page = async ({ params }: { params:{ slug: string } }) => {
   )
 }
 
-export default page
+export default Page;

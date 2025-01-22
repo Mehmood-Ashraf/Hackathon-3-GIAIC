@@ -1,4 +1,4 @@
-export default {
+const food =  {
     name: 'food',
     type: 'document',
     title: 'Food',
@@ -69,3 +69,5 @@ export default {
     ],
   };
   
+
+  export default food

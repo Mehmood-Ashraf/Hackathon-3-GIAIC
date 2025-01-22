@@ -4,8 +4,9 @@ import React, { useState, useEffect } from "react";
 import Header from "@/components/layout/Header";
 import IFoods from "@/types/foods";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
 
-const page = () => {
+const Page = () => {
   const [cartItems, setCartItems] = useState<IFoods[]>([]);
   const [isClient, setIsClient] = useState(false);
   const router = useRouter();
@@ -68,11 +69,17 @@ const page = () => {
             className="grid grid-cols-5 gap-8 items-center font-inter text-lg text-[#333333]"
           >
             <div className="col-span-1 flex items-center">
-              <img
+              <Image
+              src={item.imageUrl as string}
+              alt={item.name}
+              width={50}
+              height={50}
+              ></Image>
+              {/* <img
                 src={item.imageUrl}
                 alt={item.name}
                 className="w-[50px] h-[50px] object-cover rounded-md"
-              />
+              /> */}
               <div className="col-span-1">{item.name}</div>
             </div>
             <div className="col-span-1">${item.price.toFixed(2)}</div>
@@ -82,7 +89,7 @@ const page = () => {
             </div>
             <div className="col-span-1">
               <button
-                onClick={() => removeFromCart(item.id)}
+                onClick={() => removeFromCart(item.id as string)}
                 className="text-red-500"
               >
                 ✕
@@ -146,4 +153,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Page;

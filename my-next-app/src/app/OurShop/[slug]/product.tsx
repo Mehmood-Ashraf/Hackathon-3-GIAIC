@@ -16,7 +16,6 @@ import IFoods from "@/types/foods";
 const Product = ({product}: {product:IFoods}) => {
 
   const [quantity, setQuantity] = useState(1)
-  // const [userId, setUserId] = useState<string | null>(null)
 
   const quantityIncrement = () => {
     setQuantity(quantity + 1)
@@ -45,7 +44,7 @@ const Product = ({product}: {product:IFoods}) => {
     const cartItems = JSON.parse(localStorage.getItem("cart") || "[]");
     console.log("Existing Cart Items:", cartItems);
     
-    const existingItem = cartItems.find((item: any) => item.id === productId);
+    const existingItem = cartItems.find((item: IFoods) => item.id === productId);
   
     if (existingItem) {
       existingItem.quantity += 1;

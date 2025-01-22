@@ -5,11 +5,12 @@ import Image from 'next/image'
 import ShopButton1 from "../../../public/Images/OurShop/ShopButton1.png"
 import ShopButton2 from "../../../public/Images/OurShop/ShopButton2.png"
 import SideImage from "../../../public/Images/OurShop/Banner.png"
+import IFoods from '@/types/foods'
 
 
 const Hero = async () => {
 
-    const food = await client.fetch(
+    const food: IFoods[] = await client.fetch(
         `*[_type == "food"]{
         name,
         price,
@@ -24,12 +25,12 @@ const Hero = async () => {
         {/**Cards Portion */}
         <div className='flex flex-col items-center justify-center gap-14'>
             <div className='grid lg:grid-cols-3 grid-cols-2 gap-6'>
-                {food.map((element: any, index) => {
+                {food.map((element: IFoods, index) => {
                     console.log(element.slug)
                     return(
                         <ShopCard
                         key={index} 
-                        image={element.image}
+                        image={element.image || ""}
                         name={element.name}
                         OriginalPrice={element.originalPrice.toFixed(2)}
                         DiscountedPrice={element.price.toFixed(2)}
