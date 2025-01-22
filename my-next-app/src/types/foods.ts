@@ -1,4 +1,6 @@
 export default interface IFoods{
+    id?: string,
+    slug: string,
     name: string,
     category: string,
     price: number,
@@ -7,5 +9,6 @@ export default interface IFoods{
     image?: string,
     imageUrl?: string,
     description: string,
-    available: boolean
+    available: boolean,
+    quantity: number
 }

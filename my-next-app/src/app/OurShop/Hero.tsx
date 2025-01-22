@@ -18,19 +18,21 @@ const Hero = async () => {
         "slug": slug.current,
         }`
     )
+    
   return (
     <div className='max-w-[1320px] xl:my-[120px] my-20 mx-auto flex gap-6 px-4'>
         {/**Cards Portion */}
         <div className='flex flex-col items-center justify-center gap-14'>
             <div className='grid lg:grid-cols-3 grid-cols-2 gap-6'>
                 {food.map((element: any, index) => {
+                    console.log(element.slug)
                     return(
                         <ShopCard
                         key={index} 
                         image={element.image}
                         name={element.name}
-                        OriginalPrice={element.originalPrice}
-                        DiscountedPrice={element.price}
+                        OriginalPrice={element.originalPrice.toFixed(2)}
+                        DiscountedPrice={element.price.toFixed(2)}
                         slug={element.slug}
                         />
                     )

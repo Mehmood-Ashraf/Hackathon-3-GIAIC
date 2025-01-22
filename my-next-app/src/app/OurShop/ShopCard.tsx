@@ -23,8 +23,8 @@ const ShopCard = (props: ShopCardProps) => {
           <div className="font-inter">
             <p className="font-bold text-lg underline">{name}</p>
             <div className="flex gap-2">
-              <p className="text-primary">{DiscountedPrice}</p>
-              <p className="text-[#828282] line-through">{OriginalPrice}</p>
+              <p className="text-primary">${DiscountedPrice}</p>
+              <p className="text-[#828282] line-through">${OriginalPrice}</p>
             </div>
           </div>
         </div>

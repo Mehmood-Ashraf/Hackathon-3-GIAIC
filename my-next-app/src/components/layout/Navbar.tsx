@@ -100,7 +100,10 @@ const Navbar = () => {
             <Link href={"/SignUp"}>
               <AiOutlineUser className="w-6 h-6 text-background" />
             </Link>
+            <Link href={"/Cart"}>
             <Image src={Handbag} alt="HandBag Icon" className="w-6 h-6"></Image>
+            </Link>
+
           </div>
       </div>
     </div>
