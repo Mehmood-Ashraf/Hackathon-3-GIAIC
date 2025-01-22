@@ -64,3 +64,40 @@ To integrate APIs and migrate data into Sanity CMS, ensuring a functional market
 
 ---
 
+## DAY 4 - Enhancing Functionality
+
+### Goal:
+To implement advanced features that improve user experience and interactivity on the Q-Commerce platform.
+
+### What We Did:
+
+#### Dynamic Routing:
+- Implemented dynamic routing for pages such as product details.
+- Users can now view individual product pages by clicking on items from the menu or shop page. Each product page is dynamically rendered based on the unique slug.
+
+#### Add to Cart Functionality:
+- Added a button to each product for adding it to the cart.
+- Items are stored in the cart, and their quantity is adjustable.
+- Total price updates dynamically as items are added or quantities are modified.
+
+#### Checkout Page:
+- Built a dedicated checkout page to review cart contents and proceed to payment.
+- Added basic form validation for user information.
+
+#### Other Functionalities:
+- Ensured all pages and components are fully responsive across devices.
+- Enhanced the visual elements to provide a more intuitive user experience.
+- Used React Context API for global state management to handle cart and product data efficiently.
+
+---
+
+## Conclusion
+
+Over the past four days, we have laid a solid foundation for the Q-Commerce website, planned the technical architecture, and implemented dynamic API integrations and advanced features. This project showcases:
+
+- A seamless backend integration using Sanity CMS.
+- Efficient migration and management of data through custom scripts.
+- Dynamic rendering of content on the frontend with GROQ queries.
+- Advanced user-focused functionalities like search, filtering, and dynamic cart management.
+
+The project is now well-positioned for further enhancements, including user authentication, order management, and real-time updates to improve user experience.
