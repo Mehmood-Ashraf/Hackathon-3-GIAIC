@@ -1,0 +1,16 @@
+,,,,,,
+,,,,,,
+,,,,,,
+Test Case ID,Description,Steps,Expected Result,Actual Result,Status,Remarks
+TC 001,"Validate product 
+listing","Open product page >
+ Verify products",Products displayed,Products displayed,Passed,No issues found
+TC 002,Test API error handling,"Disconnect API > 
+Refresh page",Show fallback message,Show fallback message,Passed,Handled gracefully
+TC 003,Check cart functionality,"Add item to cart >
+ Verify cart",Cart updates correctly,Cart updates correctly,Passed,No issues found
+TC 004,Test form validation,"Submit form with 
+empty fields",Display error message,Display error message,Failed,Missing Validation
+TC 004,"Verify HTTPS 
+connection","Open site > 
+Check HTTPS status",HTTPS enabled,HTTPS enabled,Passed,Connection Secure
