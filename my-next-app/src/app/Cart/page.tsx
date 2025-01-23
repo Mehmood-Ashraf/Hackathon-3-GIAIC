@@ -89,7 +89,7 @@ const Page = () => {
             </div>
             <div className="col-span-1">
               <button
-                onClick={() => removeFromCart(item.id as string)}
+                onClick={() => removeFromCart(item.id as string )}
                 className="text-red-500"
               >
                 ✕
