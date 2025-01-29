@@ -17,8 +17,8 @@ const ShopCard = (props: ShopCardProps) => {
     <div>
       <Link href={`/OurShop/${slug}`}>
         <div className="flex flex-col gap-2 cursor-pointer">
-          <div className="card ">
-            <Image src={image} alt="" width={400} height={400}></Image>
+          <div className="card w-[312px] h-[267px] ">
+            <Image src={image} alt="" width={400} height={400} className="w-full h-full"></Image>
           </div>
           <div className="font-inter">
             <p className="font-bold text-lg underline">{name}</p>

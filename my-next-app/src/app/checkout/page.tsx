@@ -19,6 +19,7 @@ export default function CheckoutPage() {
     address1: "",
     address2: "",
   });
+  
   const router = useRouter();
 
   useEffect(() => {
@@ -41,9 +42,6 @@ export default function CheckoutPage() {
     alert("Proceeding to payment...");
   };
 
-//   const handleOrderComplete = () => {
-//     alert("Order placed successfully!");
-//   };
 
   const handleNavigation = () => {
     // const router = useRouter();
@@ -55,6 +53,7 @@ export default function CheckoutPage() {
     setCartItems([]);
 
     alert('Order Placed Successfully')
+    console.log(shippingAddress);
 
     router.push('/')
   }
@@ -191,10 +190,10 @@ export default function CheckoutPage() {
                     className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500"
                   >
                     <option value="">Choose country</option>
-                    <option value="us">Pakistan</option>
-                    <option value="uk">Saudia Arabia</option>
-                    <option value="ca">USA</option>
-                    <option value="uk">Palestine</option>
+                    <option value="pakistan">Pakistan</option>
+                    <option value="saudiaArabia">Saudia Arabia</option>
+                    <option value="usa">USA</option>
+                    <option value="paletine">Palestine</option>
                   </select>
                 </div>
 

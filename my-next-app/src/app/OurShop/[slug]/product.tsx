@@ -60,16 +60,13 @@ const Product = ({product}: {product:IFoods}) => {
     localStorage.setItem("cart", JSON.stringify(cartItems));  
     alert("Product added to cart!");
   };
-
-  
-  
-  
+ 
 
   return (
     <div>
-      <div className="max-w-[1320px] mx-auto my-[120px] flex gap-[55px] px-3">
-        <div className="flex gap-6 h-[596px]">
-          <div className="flex flex-col gap-6">
+      <div className="max-w-[1320px] mx-auto my-20 md:my-[120px] grid md:grid-cols-2 gap-[55px] px-3">
+        <div className="flex gap-6 h-auto sm:h-[596px] justify-center">
+          <div className="hidden sm:flex flex-col gap-6">
             <Image
               src={product.imageUrl || ""}
               alt=""
@@ -106,12 +103,12 @@ const Product = ({product}: {product:IFoods}) => {
               alt=""
               width={491}
               height={596}
-              className="rounded-md h-full"
+              className="rounded-md sm:h-full h-auto"
             ></Image>
           </div>
         </div>
 
-        <div className="flex flex-col w-1/2 gap-4">
+        <div className="flex flex-col gap-4">
           <div className="flex justify-between">
             <div>
               <button className="rounded-md bg-primary font-inter font-normal text-sm text-white leading-[22px] px-4 py-1">
@@ -167,9 +164,9 @@ const Product = ({product}: {product:IFoods}) => {
 
               <div className="flex gap-4">
                 <div className="flex text-[#828282] ">
-                  <button onClick={quantityDecrement} className="w-16 h-[50px] text-2xl border border-gray-500 hover:bg-[#ffaf37]">-</button>
-                  <button className="w-16 h-[50px] text-2xl border border-gray-500 hover:bg-[#ffaf37]">{quantity}</button>
-                  <button onClick={quantityIncrement} className="w-16 h-[50px] text-2xl border border-gray-500 hover:bg-[#ffaf37]">+</button>
+                  <button onClick={quantityDecrement} className="w-[50px] sm:w-16 h-[50px] text-2xl border border-gray-500 hover:bg-[#ffaf37]">-</button>
+                  <button className="w-[50px] sm:w-16 h-[50px] text-2xl border border-gray-500 hover:bg-[#ffaf37]">{quantity}</button>
+                  <button onClick={quantityIncrement} className="w-[50px] sm:w-16 h-[50px] text-2xl border border-gray-500 hover:bg-[#ffaf37]">+</button>
                 </div>
                 <div>
                   <button onClick={addToCart} className="bg-[#FF9F0D] px-6 py-2 text-[12px] md:text-lg hover:bg-[#ffaf37] text-white 
