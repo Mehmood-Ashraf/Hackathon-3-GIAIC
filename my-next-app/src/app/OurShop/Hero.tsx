@@ -9,12 +9,12 @@ import ShopButton2 from "../../../public/Images/OurShop/ShopButton2.png";
 import SideImage from "../../../public/Images/OurShop/Banner.png";
 import IFoods from "@/types/foods";
 import { CiSearch } from "react-icons/ci";
-// import { RiArrowDropDownLine } from "react-icons/ri";
 
 const Hero = () => {
   const [food, setFood] = useState<IFoods[]>([]);
-  const [loading, setLoading] = useState(true)
-  const [currentPage, setCurrentPage] = useState(1)
+  const [loading, setLoading] = useState(true);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [searchProducts, setSearchProducts] = useState("");
   const itemsPerPage = 6;
 
   useEffect( () => {
@@ -42,9 +42,14 @@ const Hero = () => {
     fetchProducts();
   }, []);
 
-  const totalPages = Math.ceil(food.length / itemsPerPage);
+
+  const filteredProducts = food.filter( (item) => 
+        item.name.toLowerCase().includes(searchProducts.toLowerCase())      
+  );
+
+  const totalPages = Math.ceil(filteredProducts.length / itemsPerPage);
   const startIndex = (currentPage - 1)* itemsPerPage;
-  const currentItems = food.slice(startIndex, startIndex + itemsPerPage);
+  const currentItems = filteredProducts.slice(startIndex, startIndex + itemsPerPage);
 
   const handleNextPage = () => {
     if(currentPage < totalPages) setCurrentPage(currentPage + 1)
@@ -102,9 +107,15 @@ const Hero = () => {
 
       </div>
 
-      <div className="flex mt-6 gap-6">
+      <div className="flex mt-6 gap-6 justify-between">
         {/**Cards Portion */}
-        <div className="flex flex-col items-center justify-center gap-14">
+        <div className="w-full flex flex-col items-center justify-center gap-14">
+          {filteredProducts.length === 0 ? (
+            <div>
+              <p className="text-6xl text-primary">Items not Found</p>
+            </div>
+          ) : (
+            <>
           <div className="grid lg:grid-cols-3 grid-cols-2 gap-6">
             {currentItems.map((element: IFoods, index) => {
               console.log(element.slug);
@@ -140,6 +151,7 @@ const Hero = () => {
               <Image src={ShopButton2} alt=""></Image>
             </button>
           </div>
+          </>)}
         </div>
 
         {/**Category Portion */}
@@ -149,6 +161,7 @@ const Hero = () => {
               type="text"
               placeholder="Search Products"
               className="bg-pink-50 font-inter text-base font-normal py-3 px-4 outline-none"
+              onChange={(e) => setSearchProducts(e.target.value)}
             />
             <button className="bg-primary w-12 h-12 absolute text-white flex justify-center items-center text-xl top-0 right-0">
               <CiSearch />
