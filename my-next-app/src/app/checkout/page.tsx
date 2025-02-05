@@ -4,6 +4,8 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import React, { useState, useEffect } from "react";
 import IFoods from "@/types/foods";
+import { client } from "../../sanity/lib/client"
+
 
 export default function CheckoutPage() {
   const [cartItems, setCartItems] = useState<IFoods[]>([]);
@@ -12,12 +14,10 @@ export default function CheckoutPage() {
     lastName: "",
     email: "",
     phone: "",
-    company: "",
     country: "",
     city: "",
     zip: "",
-    address1: "",
-    address2: "",
+    address: "",
   });
   
   const router = useRouter();
@@ -34,11 +34,77 @@ export default function CheckoutPage() {
 
   const tax = (totalAmount * 0.07).toFixed(2);
 
-  const handleProceedToPayment = () => {
-    if (!shippingAddress.firstName || !shippingAddress.address1) {
+  const fetchDocumentIdBySlug = async (slug: string | undefined) => {
+    try {
+
+      if(!slug){
+        console.log(`sllug is missing`)
+        return null
+      }
+      const query = `*[_type == "food" && slug.current == $slug][0]._id`;
+      const params = { slug };
+      
+      console.log(query)
+      console.log(params)
+
+      const result =  await client.fetch(query, params);
+      console.log(result)
+      return result
+
+    } catch (error) {
+      console.error("Error fetching document ID:", error);
+      return null;
+    }
+  };
+
+
+  const handleProceedToPayment = async () => {
+    if (!shippingAddress.firstName || !shippingAddress.address) {
       alert("Please enter a shipping address.");
       return;
     }
+    
+    try {
+      const cartItemsWithRef = await Promise.all(
+       cartItems.map(async (item, index) => {
+
+        const slug = item.slug || item.id
+
+      console.log(item);
+      console.log(item.id )
+      console.log(item.slug)
+
+      const documentId =  await fetchDocumentIdBySlug(slug);
+      return {
+        _key: item.slug || `item.${index}`,
+        _type: 'reference',
+        _ref: documentId,// Yaha item._id ko reference dena hoga
+      }
+    }),
+  )
+
+      const order = {
+        _type: "order",  // Sanity document type
+        firstName: shippingAddress.firstName,
+        lastName: shippingAddress.lastName,
+        email: shippingAddress.email,
+        phone: shippingAddress.phone,
+        country: shippingAddress.country,
+        city: shippingAddress.city,
+        zipCode: shippingAddress.zip,
+        address: shippingAddress.address,  
+        cartItems: cartItemsWithRef,
+        status: "pending" // Default order status
+      };
+      
+      // Document ko create karna
+      await client.create(order);
+      alert("Order saved successfully.");
+    } catch (error) {
+      console.error("Error saving order:", error);
+      alert("There was an error saving your order.");
+    }
+    
     alert("Proceeding to payment...");
   };
 
@@ -63,7 +129,7 @@ export default function CheckoutPage() {
       
       <Header name={"Checkout Page"} linkName={"Checkout"}/>
 
-      <div className="container px-[70px] md:px-[135px] py-8">
+      <div className="container max-w-[1320px] mx-auto my-20 md:my-[120px] px-3">
         <div className="grid gap-8 lg:grid-cols-2">
           
           <div className="space-y-6">
@@ -156,7 +222,7 @@ export default function CheckoutPage() {
                   />
                 </div>
 
-                <div>
+                {/* <div>
                   <label
                     htmlFor="company"
                     className="block text-sm font-medium text-gray-700 mb-1"
@@ -175,7 +241,7 @@ export default function CheckoutPage() {
                     }}
                     className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500"
                   />
-                </div>
+                </div> */}
                 <div>
                   <label
                     htmlFor="country"
@@ -234,18 +300,18 @@ export default function CheckoutPage() {
                     htmlFor="company"
                     className="block text-sm font-medium text-gray-700 mb-1"
                   >
-                    Address 1
+                    Address
                   </label>
                   <input
                     type="text"
                     id="address1"
-                    value={shippingAddress.address1}
-                    onChange={(e) => setShippingAddress({ ...shippingAddress, address1: e.target.value })}
+                    value={shippingAddress.address}
+                    onChange={(e) => setShippingAddress({ ...shippingAddress, address: e.target.value })}
                     className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500"
                   />
                 </div>
 
-                <div>
+                {/* <div>
                   <label
                     htmlFor="company"
                     className="block text-sm font-medium text-gray-700 mb-1"
@@ -259,7 +325,7 @@ export default function CheckoutPage() {
                     onChange={(e) => setShippingAddress({ ...shippingAddress, address2: e.target.value })}
                     className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500"
                   />
-                </div>
+                </div> */}
 
               </div>
             </div>
@@ -287,7 +353,7 @@ export default function CheckoutPage() {
               </button>
               <button
                 onClick={handleProceedToPayment}
-                className="px-6 py-2 bg-orange-500 text-white rounded-md shadow-sm text-sm font-medium hover:bg-orange-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500 w-full md:w-72 h-12"
+                className="px-6 py-2 bg-primary text-white rounded-md shadow-sm text-sm font-medium hover:bg-orange-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500 w-full md:w-72 h-12"
               >
                 Proceed to shipping
               </button>
@@ -295,7 +361,7 @@ export default function CheckoutPage() {
           </div>
 
           {/* Right Column - Order Summary */}
-          <div className="p-6 rounded-lg border-2 border-gray-300">
+          <div className="p-6 rounded-lg border-2 border-gray-300 h-fit">
             <h2 className="text-xl font-semibold mb-4">Order Summary</h2>
 
             {/* Order Items */}
@@ -352,11 +418,12 @@ export default function CheckoutPage() {
 
             <button
               onClick={orderComplete}
-              className="w-full mt-10 px-6 py-2 bg-orange-500 text-white rounded-md shadow-sm text-sm font-medium hover:bg-orange-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500 h-12"
+              className="w-full mt-10 px-6 py-2 bg-primary text-white rounded-md shadow-sm text-sm font-medium hover:bg-orange-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500 h-12"
             >
               Place an order
             </button>
           </div>
+          
         </div>
       </div>
     </>

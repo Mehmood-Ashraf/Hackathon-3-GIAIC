@@ -14,11 +14,11 @@ const ShopCard = (props: ShopCardProps) => {
   const { image, name, OriginalPrice, DiscountedPrice, slug } = props;
 
   return (
-    <div>
+    <div className="w-full max-w-[312px]">
       <Link href={`/OurShop/${slug}`}>
         <div className="flex flex-col gap-2 cursor-pointer">
-          <div className="card w-[312px] h-[267px] ">
-            <Image src={image} alt="" width={400} height={400} className="w-full h-full"></Image>
+          <div className="card w-[312px] h-[267px] sm:w-full sm:h-auto ">
+            <Image src={image} alt="" width={312} height={267} className="w-full h-full sm:h-auto object-cover"></Image>
           </div>
           <div className="font-inter">
             <p className="font-bold text-lg underline">{name}</p>

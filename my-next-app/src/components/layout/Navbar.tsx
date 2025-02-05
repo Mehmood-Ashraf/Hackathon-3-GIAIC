@@ -1,16 +1,35 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { CiSearch } from "react-icons/ci";
 import Handbag from "../../../public/Icons/Handbag.png";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { AiOutlineUser } from "react-icons/ai";
+import { useUser, useClerk } from "@clerk/nextjs";
+import { AiOutlineLogout } from "react-icons/ai";
 
 const Navbar = () => {
   // const router = useRouter();
   const pathname = usePathname();
+  const [searchQuery, setSearchQuery] = useState("");
+  const router = useRouter();
+  const { signOut } = useClerk();
+  const { user, isLoaded } = useUser();
+
+  const handleSearch = () => {
+    if(searchQuery.trim() !== ""){
+      router.push(`/OurShop?search=${encodeURIComponent(searchQuery)}`)
+      
+      setSearchQuery("")
+    }
+  }
+
+  const handleSignOut = async () => {
+    await signOut();
+    router.push("/"); // Redirect to homepage after sign out
+  };
 
   if (pathname === "/") {
     return (
@@ -51,11 +70,24 @@ const Navbar = () => {
               <div className="input relative md:flex hidden">
                 <input
                   type="text"
+                  value={searchQuery}
+                  onChange={(e) => {
+                    setSearchQuery(e.target.value)
+                  }}
                   placeholder="Search...."
                   className="rounded-[27px] bg-transparent border-2 border-primary px-[26px] py-[14px] outline-none text-white"
                 />
-                <CiSearch className="absolute w-6 h-6 text-background top-[14px] right-7" />
+                <CiSearch onClick={handleSearch} className="absolute w-6 h-6 text-background top-[14px] right-7" />
               </div>
+              {isLoaded && !user ? (
+                <Link href="/SignUp">
+                  <AiOutlineUser className="w-6 h-6 text-background" />
+                </Link>
+              ) : (
+                <button onClick={handleSignOut} className="text-background">
+                  <AiOutlineLogout  className="w-6 h-6 text-background"/>
+                </button>
+              )}
               <Link href={"/SignUp"}>
               <CiSearch className=" w-6 h-6 text-background top-[14px] right-7 flex md:hidden" />
               </Link>

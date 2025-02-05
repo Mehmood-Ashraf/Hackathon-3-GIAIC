@@ -68,7 +68,7 @@ const Page = () => {
             key={item.id}
             className="grid grid-cols-5 gap-8 items-center font-inter text-lg text-[#333333]"
           >
-            <div className="col-span-1 flex items-center">
+            <div className="col-span-1 gap-1 flex items-center">
               <Image
               src={item.imageUrl as string}
               alt={item.name}
@@ -101,14 +101,14 @@ const Page = () => {
 
       <div className="flex flex-col md:flex-row max-w-[1320px]  justify-between items-start md:items-center gap-6 p-6 mx-auto rounded-lg">
       {/* Coupon Code Section */}
-      <div className="w-full md:w-1/2 p-4  rounded-lg ">
+      <div className="w-full md:w-1/2 p-4 rounded-lg ">
         <h3 className="text-xl font-semibold mb-4">Coupon Code</h3>
-        <div className='border px-[24px] py-[20px]'>
+        <div className='border px-[20px] py-[20px]'>
         <p className="text-gray-400 text-sm mb-4">
           Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque
           diam pellentesque bibendum non.
         </p>
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-4 flex-wrap justify-center">
           <input
             type="text"
             placeholder="Enter Here code"
